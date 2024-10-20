@@ -35,5 +35,11 @@ jobs:
             run: cargo test --release --verbose --features arkworks
           - name: Lint
             run: cargo clippy --release --features arkworks 
-          - name: Format
-            run: cargo fmt -- --check
+          - name: Check Rust version and rustfmt version
+            run: |
+              rustc --version
+              rustfmt --version
+          - name: Format check (verbose)
+            run: cargo fmt -- --check --verbose $(find . -name '*.rs' -not -path './src/protobuf/*')
+          - name: List changed files
+            run: git diff --name-only
