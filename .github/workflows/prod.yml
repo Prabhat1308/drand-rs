@@ -20,6 +20,8 @@ jobs:
     
         steps:
           - uses: actions/checkout@v2
+          - name: Install protobuf-compiler
+            run: sudo apt-get update && sudo apt-get install -y protobuf-compiler
           - run: rustup toolchain install ${{ matrix.rust }} && rustup default ${{ matrix.rust }} && rustup update ${{ matrix.rust }}
           - name: Build
             run: cargo build --release --verbose --features arkworks
