@@ -111,8 +111,7 @@ pub mod public_client {
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static("/drand.Public/Home");
             let mut req = request.into_request();
-            req.extensions_mut()
-                .insert(GrpcMethod::new("drand.Public", "Home"));
+            req.extensions_mut().insert(GrpcMethod::new("drand.Public", "Home"));
             self.inner.unary(req, path, codec).await
         }
     }
@@ -487,8 +486,7 @@ pub mod protocol_client {
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static("/drand.Protocol/GetIdentity");
             let mut req = request.into_request();
-            req.extensions_mut()
-                .insert(GrpcMethod::new("drand.Protocol", "GetIdentity"));
+            req.extensions_mut().insert(GrpcMethod::new("drand.Protocol", "GetIdentity"));
             self.inner.unary(req, path, codec).await
         }
         ///   SignalDKGParticipant is called by non-coordinators nodes that sends
@@ -508,8 +506,7 @@ pub mod protocol_client {
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static("/drand.Protocol/SignalDKGParticipant");
             let mut req = request.into_request();
-            req.extensions_mut()
-                .insert(GrpcMethod::new("drand.Protocol", "SignalDKGParticipant"));
+            req.extensions_mut().insert(GrpcMethod::new("drand.Protocol", "SignalDKGParticipant"));
             self.inner.unary(req, path, codec).await
         }
         ///   PushDKGInfo is called by the coordinator to push the group he created
@@ -529,8 +526,7 @@ pub mod protocol_client {
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static("/drand.Protocol/PushDKGInfo");
             let mut req = request.into_request();
-            req.extensions_mut()
-                .insert(GrpcMethod::new("drand.Protocol", "PushDKGInfo"));
+            req.extensions_mut().insert(GrpcMethod::new("drand.Protocol", "PushDKGInfo"));
             self.inner.unary(req, path, codec).await
         }
         ///   BroadcastPacket is used during DKG phases
@@ -548,8 +544,7 @@ pub mod protocol_client {
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static("/drand.Protocol/BroadcastDKG");
             let mut req = request.into_request();
-            req.extensions_mut()
-                .insert(GrpcMethod::new("drand.Protocol", "BroadcastDKG"));
+            req.extensions_mut().insert(GrpcMethod::new("drand.Protocol", "BroadcastDKG"));
             self.inner.unary(req, path, codec).await
         }
         ///   PartialBeacon sends its partial beacon to another node
@@ -567,8 +562,7 @@ pub mod protocol_client {
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static("/drand.Protocol/PartialBeacon");
             let mut req = request.into_request();
-            req.extensions_mut()
-                .insert(GrpcMethod::new("drand.Protocol", "PartialBeacon"));
+            req.extensions_mut().insert(GrpcMethod::new("drand.Protocol", "PartialBeacon"));
             self.inner.unary(req, path, codec).await
         }
     }
@@ -1258,8 +1252,7 @@ pub mod control_client {
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static("/drand.Control/ListSchemes");
             let mut req = request.into_request();
-            req.extensions_mut()
-                .insert(GrpcMethod::new("drand.Control", "ListSchemes"));
+            req.extensions_mut().insert(GrpcMethod::new("drand.Control", "ListSchemes"));
             self.inner.unary(req, path, codec).await
         }
         pub async fn pool_info(
@@ -1275,8 +1268,7 @@ pub mod control_client {
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static("/drand.Control/PoolInfo");
             let mut req = request.into_request();
-            req.extensions_mut()
-                .insert(GrpcMethod::new("drand.Control", "PoolInfo"));
+            req.extensions_mut().insert(GrpcMethod::new("drand.Control", "PoolInfo"));
             self.inner.unary(req, path, codec).await
         }
         /// InitDKG sends information to daemon to start a fresh DKG protocol
@@ -1293,8 +1285,7 @@ pub mod control_client {
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static("/drand.Control/InitDKG");
             let mut req = request.into_request();
-            req.extensions_mut()
-                .insert(GrpcMethod::new("drand.Control", "InitDKG"));
+            req.extensions_mut().insert(GrpcMethod::new("drand.Control", "InitDKG"));
             self.inner.unary(req, path, codec).await
         }
         /// PublicKey returns the longterm public key of the drand node
@@ -1311,8 +1302,7 @@ pub mod control_client {
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static("/drand.Control/PublicKey");
             let mut req = request.into_request();
-            req.extensions_mut()
-                .insert(GrpcMethod::new("drand.Control", "PublicKey"));
+            req.extensions_mut().insert(GrpcMethod::new("drand.Control", "PublicKey"));
             self.inner.unary(req, path, codec).await
         }
         pub async fn shutdown(
@@ -1328,8 +1318,7 @@ pub mod control_client {
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static("/drand.Control/Shutdown");
             let mut req = request.into_request();
-            req.extensions_mut()
-                .insert(GrpcMethod::new("drand.Control", "Shutdown"));
+            req.extensions_mut().insert(GrpcMethod::new("drand.Control", "Shutdown"));
             self.inner.unary(req, path, codec).await
         }
         pub async fn load_beacon(
@@ -1346,8 +1335,7 @@ pub mod control_client {
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static("/drand.Control/LoadBeacon");
             let mut req = request.into_request();
-            req.extensions_mut()
-                .insert(GrpcMethod::new("drand.Control", "LoadBeacon"));
+            req.extensions_mut().insert(GrpcMethod::new("drand.Control", "LoadBeacon"));
             self.inner.unary(req, path, codec).await
         }
     }
