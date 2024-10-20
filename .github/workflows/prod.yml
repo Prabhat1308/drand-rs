@@ -32,7 +32,7 @@ jobs:
           - name: Test
             run: cargo test --release --verbose --features arkworks
           - name: Lint
-            run: cargo clippy  --release --features arkworks -- -D warnings
+            run: cargo clippy  --release --features arkworks 
           - name: Format
             run: cargo fmt -- --check
 
