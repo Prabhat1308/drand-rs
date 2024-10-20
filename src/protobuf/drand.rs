@@ -16,8 +16,8 @@ pub struct HomeResponse {
 /// Generated client implementations.
 pub mod public_client {
     #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
-    use tonic::codegen::*;
     use tonic::codegen::http::Uri;
+    use tonic::codegen::*;
     #[derive(Debug, Clone)]
     pub struct PublicClient<T> {
         inner: tonic::client::Grpc<T>,
@@ -61,9 +61,8 @@ pub mod public_client {
                     <T as tonic::client::GrpcService<tonic::body::BoxBody>>::ResponseBody,
                 >,
             >,
-            <T as tonic::codegen::Service<
-                http::Request<tonic::body::BoxBody>,
-            >>::Error: Into<StdError> + Send + Sync,
+            <T as tonic::codegen::Service<http::Request<tonic::body::BoxBody>>>::Error:
+                Into<StdError> + Send + Sync,
         {
             PublicClient::new(InterceptedService::new(inner, interceptor))
         }
@@ -103,19 +102,17 @@ pub mod public_client {
             &mut self,
             request: impl tonic::IntoRequest<super::HomeRequest>,
         ) -> std::result::Result<tonic::Response<super::HomeResponse>, tonic::Status> {
-            self.inner
-                .ready()
-                .await
-                .map_err(|e| {
-                    tonic::Status::new(
-                        tonic::Code::Unknown,
-                        format!("Service was not ready: {}", e.into()),
-                    )
-                })?;
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static("/drand.Public/Home");
             let mut req = request.into_request();
-            req.extensions_mut().insert(GrpcMethod::new("drand.Public", "Home"));
+            req.extensions_mut()
+                .insert(GrpcMethod::new("drand.Public", "Home"));
             self.inner.unary(req, path, codec).await
         }
     }
@@ -156,10 +153,7 @@ pub mod public_server {
                 max_encoding_message_size: None,
             }
         }
-        pub fn with_interceptor<F>(
-            inner: T,
-            interceptor: F,
-        ) -> InterceptedService<Self, F>
+        pub fn with_interceptor<F>(inner: T, interceptor: F) -> InterceptedService<Self, F>
         where
             F: tonic::service::Interceptor,
         {
@@ -215,21 +209,15 @@ pub mod public_server {
                 "/drand.Public/Home" => {
                     #[allow(non_camel_case_types)]
                     struct HomeSvc<T: Public>(pub Arc<T>);
-                    impl<T: Public> tonic::server::UnaryService<super::HomeRequest>
-                    for HomeSvc<T> {
+                    impl<T: Public> tonic::server::UnaryService<super::HomeRequest> for HomeSvc<T> {
                         type Response = super::HomeResponse;
-                        type Future = BoxFuture<
-                            tonic::Response<Self::Response>,
-                            tonic::Status,
-                        >;
+                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(
                             &mut self,
                             request: tonic::Request<super::HomeRequest>,
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
-                            let fut = async move {
-                                <T as Public>::home(&inner, request).await
-                            };
+                            let fut = async move { <T as Public>::home(&inner, request).await };
                             Box::pin(fut)
                         }
                     }
@@ -256,18 +244,14 @@ pub mod public_server {
                     };
                     Box::pin(fut)
                 }
-                _ => {
-                    Box::pin(async move {
-                        Ok(
-                            http::Response::builder()
-                                .status(200)
-                                .header("grpc-status", "12")
-                                .header("content-type", "application/grpc")
-                                .body(empty_body())
-                                .unwrap(),
-                        )
-                    })
-                }
+                _ => Box::pin(async move {
+                    Ok(http::Response::builder()
+                        .status(200)
+                        .header("grpc-status", "12")
+                        .header("content-type", "application/grpc")
+                        .body(empty_body())
+                        .unwrap())
+                }),
             }
         }
     }
@@ -408,8 +392,8 @@ pub struct BeaconPacket {
 /// Generated client implementations.
 pub mod protocol_client {
     #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
-    use tonic::codegen::*;
     use tonic::codegen::http::Uri;
+    use tonic::codegen::*;
     #[derive(Debug, Clone)]
     pub struct ProtocolClient<T> {
         inner: tonic::client::Grpc<T>,
@@ -453,9 +437,8 @@ pub mod protocol_client {
                     <T as tonic::client::GrpcService<tonic::body::BoxBody>>::ResponseBody,
                 >,
             >,
-            <T as tonic::codegen::Service<
-                http::Request<tonic::body::BoxBody>,
-            >>::Error: Into<StdError> + Send + Sync,
+            <T as tonic::codegen::Service<http::Request<tonic::body::BoxBody>>>::Error:
+                Into<StdError> + Send + Sync,
         {
             ProtocolClient::new(InterceptedService::new(inner, interceptor))
         }
@@ -494,23 +477,15 @@ pub mod protocol_client {
         pub async fn get_identity(
             &mut self,
             request: impl tonic::IntoRequest<super::IdentityRequest>,
-        ) -> std::result::Result<
-            tonic::Response<super::IdentityResponse>,
-            tonic::Status,
-        > {
-            self.inner
-                .ready()
-                .await
-                .map_err(|e| {
-                    tonic::Status::new(
-                        tonic::Code::Unknown,
-                        format!("Service was not ready: {}", e.into()),
-                    )
-                })?;
+        ) -> std::result::Result<tonic::Response<super::IdentityResponse>, tonic::Status> {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static(
-                "/drand.Protocol/GetIdentity",
-            );
+            let path = http::uri::PathAndQuery::from_static("/drand.Protocol/GetIdentity");
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(GrpcMethod::new("drand.Protocol", "GetIdentity"));
@@ -522,23 +497,16 @@ pub mod protocol_client {
         pub async fn signal_dkg_participant(
             &mut self,
             request: impl tonic::IntoRequest<super::SignalDkgPacket>,
-        ) -> std::result::Result<
-            tonic::Response<super::super::common::Empty>,
-            tonic::Status,
-        > {
-            self.inner
-                .ready()
-                .await
-                .map_err(|e| {
-                    tonic::Status::new(
-                        tonic::Code::Unknown,
-                        format!("Service was not ready: {}", e.into()),
-                    )
-                })?;
+        ) -> std::result::Result<tonic::Response<super::super::common::Empty>, tonic::Status>
+        {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static(
-                "/drand.Protocol/SignalDKGParticipant",
-            );
+            let path = http::uri::PathAndQuery::from_static("/drand.Protocol/SignalDKGParticipant");
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(GrpcMethod::new("drand.Protocol", "SignalDKGParticipant"));
@@ -550,23 +518,16 @@ pub mod protocol_client {
         pub async fn push_dkg_info(
             &mut self,
             request: impl tonic::IntoRequest<super::DkgInfoPacket>,
-        ) -> std::result::Result<
-            tonic::Response<super::super::common::Empty>,
-            tonic::Status,
-        > {
-            self.inner
-                .ready()
-                .await
-                .map_err(|e| {
-                    tonic::Status::new(
-                        tonic::Code::Unknown,
-                        format!("Service was not ready: {}", e.into()),
-                    )
-                })?;
+        ) -> std::result::Result<tonic::Response<super::super::common::Empty>, tonic::Status>
+        {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static(
-                "/drand.Protocol/PushDKGInfo",
-            );
+            let path = http::uri::PathAndQuery::from_static("/drand.Protocol/PushDKGInfo");
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(GrpcMethod::new("drand.Protocol", "PushDKGInfo"));
@@ -576,23 +537,16 @@ pub mod protocol_client {
         pub async fn broadcast_dkg(
             &mut self,
             request: impl tonic::IntoRequest<super::DkgPacket>,
-        ) -> std::result::Result<
-            tonic::Response<super::super::common::Empty>,
-            tonic::Status,
-        > {
-            self.inner
-                .ready()
-                .await
-                .map_err(|e| {
-                    tonic::Status::new(
-                        tonic::Code::Unknown,
-                        format!("Service was not ready: {}", e.into()),
-                    )
-                })?;
+        ) -> std::result::Result<tonic::Response<super::super::common::Empty>, tonic::Status>
+        {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static(
-                "/drand.Protocol/BroadcastDKG",
-            );
+            let path = http::uri::PathAndQuery::from_static("/drand.Protocol/BroadcastDKG");
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(GrpcMethod::new("drand.Protocol", "BroadcastDKG"));
@@ -602,23 +556,16 @@ pub mod protocol_client {
         pub async fn partial_beacon(
             &mut self,
             request: impl tonic::IntoRequest<super::PartialBeaconPacket>,
-        ) -> std::result::Result<
-            tonic::Response<super::super::common::Empty>,
-            tonic::Status,
-        > {
-            self.inner
-                .ready()
-                .await
-                .map_err(|e| {
-                    tonic::Status::new(
-                        tonic::Code::Unknown,
-                        format!("Service was not ready: {}", e.into()),
-                    )
-                })?;
+        ) -> std::result::Result<tonic::Response<super::super::common::Empty>, tonic::Status>
+        {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static(
-                "/drand.Protocol/PartialBeacon",
-            );
+            let path = http::uri::PathAndQuery::from_static("/drand.Protocol/PartialBeacon");
             let mut req = request.into_request();
             req.extensions_mut()
                 .insert(GrpcMethod::new("drand.Protocol", "PartialBeacon"));
@@ -637,46 +584,31 @@ pub mod protocol_server {
         async fn get_identity(
             &self,
             request: tonic::Request<super::IdentityRequest>,
-        ) -> std::result::Result<
-            tonic::Response<super::IdentityResponse>,
-            tonic::Status,
-        >;
+        ) -> std::result::Result<tonic::Response<super::IdentityResponse>, tonic::Status>;
         ///   SignalDKGParticipant is called by non-coordinators nodes that sends
         ///   their public keys and secret proof they have to the coordinator so that
         ///   he can create the group.
         async fn signal_dkg_participant(
             &self,
             request: tonic::Request<super::SignalDkgPacket>,
-        ) -> std::result::Result<
-            tonic::Response<super::super::common::Empty>,
-            tonic::Status,
-        >;
+        ) -> std::result::Result<tonic::Response<super::super::common::Empty>, tonic::Status>;
         ///   PushDKGInfo is called by the coordinator to push the group he created
         ///   from all received keys and as well other information such as the time
         ///   of starting the DKG.
         async fn push_dkg_info(
             &self,
             request: tonic::Request<super::DkgInfoPacket>,
-        ) -> std::result::Result<
-            tonic::Response<super::super::common::Empty>,
-            tonic::Status,
-        >;
+        ) -> std::result::Result<tonic::Response<super::super::common::Empty>, tonic::Status>;
         ///   BroadcastPacket is used during DKG phases
         async fn broadcast_dkg(
             &self,
             request: tonic::Request<super::DkgPacket>,
-        ) -> std::result::Result<
-            tonic::Response<super::super::common::Empty>,
-            tonic::Status,
-        >;
+        ) -> std::result::Result<tonic::Response<super::super::common::Empty>, tonic::Status>;
         ///   PartialBeacon sends its partial beacon to another node
         async fn partial_beacon(
             &self,
             request: tonic::Request<super::PartialBeaconPacket>,
-        ) -> std::result::Result<
-            tonic::Response<super::super::common::Empty>,
-            tonic::Status,
-        >;
+        ) -> std::result::Result<tonic::Response<super::super::common::Empty>, tonic::Status>;
     }
     #[derive(Debug)]
     pub struct ProtocolServer<T: Protocol> {
@@ -701,10 +633,7 @@ pub mod protocol_server {
                 max_encoding_message_size: None,
             }
         }
-        pub fn with_interceptor<F>(
-            inner: T,
-            interceptor: F,
-        ) -> InterceptedService<Self, F>
+        pub fn with_interceptor<F>(inner: T, interceptor: F) -> InterceptedService<Self, F>
         where
             F: tonic::service::Interceptor,
         {
@@ -760,21 +689,16 @@ pub mod protocol_server {
                 "/drand.Protocol/GetIdentity" => {
                     #[allow(non_camel_case_types)]
                     struct GetIdentitySvc<T: Protocol>(pub Arc<T>);
-                    impl<T: Protocol> tonic::server::UnaryService<super::IdentityRequest>
-                    for GetIdentitySvc<T> {
+                    impl<T: Protocol> tonic::server::UnaryService<super::IdentityRequest> for GetIdentitySvc<T> {
                         type Response = super::IdentityResponse;
-                        type Future = BoxFuture<
-                            tonic::Response<Self::Response>,
-                            tonic::Status,
-                        >;
+                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(
                             &mut self,
                             request: tonic::Request<super::IdentityRequest>,
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
-                            let fut = async move {
-                                <T as Protocol>::get_identity(&inner, request).await
-                            };
+                            let fut =
+                                async move { <T as Protocol>::get_identity(&inner, request).await };
                             Box::pin(fut)
                         }
                     }
@@ -805,20 +729,17 @@ pub mod protocol_server {
                     #[allow(non_camel_case_types)]
                     struct SignalDKGParticipantSvc<T: Protocol>(pub Arc<T>);
                     impl<T: Protocol> tonic::server::UnaryService<super::SignalDkgPacket>
-                    for SignalDKGParticipantSvc<T> {
+                        for SignalDKGParticipantSvc<T>
+                    {
                         type Response = super::super::common::Empty;
-                        type Future = BoxFuture<
-                            tonic::Response<Self::Response>,
-                            tonic::Status,
-                        >;
+                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(
                             &mut self,
                             request: tonic::Request<super::SignalDkgPacket>,
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
                             let fut = async move {
-                                <T as Protocol>::signal_dkg_participant(&inner, request)
-                                    .await
+                                <T as Protocol>::signal_dkg_participant(&inner, request).await
                             };
                             Box::pin(fut)
                         }
@@ -849,13 +770,9 @@ pub mod protocol_server {
                 "/drand.Protocol/PushDKGInfo" => {
                     #[allow(non_camel_case_types)]
                     struct PushDKGInfoSvc<T: Protocol>(pub Arc<T>);
-                    impl<T: Protocol> tonic::server::UnaryService<super::DkgInfoPacket>
-                    for PushDKGInfoSvc<T> {
+                    impl<T: Protocol> tonic::server::UnaryService<super::DkgInfoPacket> for PushDKGInfoSvc<T> {
                         type Response = super::super::common::Empty;
-                        type Future = BoxFuture<
-                            tonic::Response<Self::Response>,
-                            tonic::Status,
-                        >;
+                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(
                             &mut self,
                             request: tonic::Request<super::DkgInfoPacket>,
@@ -893,13 +810,9 @@ pub mod protocol_server {
                 "/drand.Protocol/BroadcastDKG" => {
                     #[allow(non_camel_case_types)]
                     struct BroadcastDKGSvc<T: Protocol>(pub Arc<T>);
-                    impl<T: Protocol> tonic::server::UnaryService<super::DkgPacket>
-                    for BroadcastDKGSvc<T> {
+                    impl<T: Protocol> tonic::server::UnaryService<super::DkgPacket> for BroadcastDKGSvc<T> {
                         type Response = super::super::common::Empty;
-                        type Future = BoxFuture<
-                            tonic::Response<Self::Response>,
-                            tonic::Status,
-                        >;
+                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(
                             &mut self,
                             request: tonic::Request<super::DkgPacket>,
@@ -937,15 +850,9 @@ pub mod protocol_server {
                 "/drand.Protocol/PartialBeacon" => {
                     #[allow(non_camel_case_types)]
                     struct PartialBeaconSvc<T: Protocol>(pub Arc<T>);
-                    impl<
-                        T: Protocol,
-                    > tonic::server::UnaryService<super::PartialBeaconPacket>
-                    for PartialBeaconSvc<T> {
+                    impl<T: Protocol> tonic::server::UnaryService<super::PartialBeaconPacket> for PartialBeaconSvc<T> {
                         type Response = super::super::common::Empty;
-                        type Future = BoxFuture<
-                            tonic::Response<Self::Response>,
-                            tonic::Status,
-                        >;
+                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(
                             &mut self,
                             request: tonic::Request<super::PartialBeaconPacket>,
@@ -980,18 +887,14 @@ pub mod protocol_server {
                     };
                     Box::pin(fut)
                 }
-                _ => {
-                    Box::pin(async move {
-                        Ok(
-                            http::Response::builder()
-                                .status(200)
-                                .header("grpc-status", "12")
-                                .header("content-type", "application/grpc")
-                                .body(empty_body())
-                                .unwrap(),
-                        )
-                    })
-                }
+                _ => Box::pin(async move {
+                    Ok(http::Response::builder()
+                        .status(200)
+                        .header("grpc-status", "12")
+                        .header("content-type", "application/grpc")
+                        .body(empty_body())
+                        .unwrap())
+                }),
             }
         }
     }
@@ -1259,8 +1162,8 @@ pub struct InitDkgResponse {
 /// Generated client implementations.
 pub mod control_client {
     #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
-    use tonic::codegen::*;
     use tonic::codegen::http::Uri;
+    use tonic::codegen::*;
     #[derive(Debug, Clone)]
     pub struct ControlClient<T> {
         inner: tonic::client::Grpc<T>,
@@ -1304,9 +1207,8 @@ pub mod control_client {
                     <T as tonic::client::GrpcService<tonic::body::BoxBody>>::ResponseBody,
                 >,
             >,
-            <T as tonic::codegen::Service<
-                http::Request<tonic::body::BoxBody>,
-            >>::Error: Into<StdError> + Send + Sync,
+            <T as tonic::codegen::Service<http::Request<tonic::body::BoxBody>>>::Error:
+                Into<StdError> + Send + Sync,
         {
             ControlClient::new(InterceptedService::new(inner, interceptor))
         }
@@ -1345,137 +1247,107 @@ pub mod control_client {
         pub async fn list_schemes(
             &mut self,
             request: impl tonic::IntoRequest<super::ListSchemesRequest>,
-        ) -> std::result::Result<
-            tonic::Response<super::ListSchemesResponse>,
-            tonic::Status,
-        > {
-            self.inner
-                .ready()
-                .await
-                .map_err(|e| {
-                    tonic::Status::new(
-                        tonic::Code::Unknown,
-                        format!("Service was not ready: {}", e.into()),
-                    )
-                })?;
+        ) -> std::result::Result<tonic::Response<super::ListSchemesResponse>, tonic::Status>
+        {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
             let codec = tonic::codec::ProstCodec::default();
-            let path = http::uri::PathAndQuery::from_static(
-                "/drand.Control/ListSchemes",
-            );
+            let path = http::uri::PathAndQuery::from_static("/drand.Control/ListSchemes");
             let mut req = request.into_request();
-            req.extensions_mut().insert(GrpcMethod::new("drand.Control", "ListSchemes"));
+            req.extensions_mut()
+                .insert(GrpcMethod::new("drand.Control", "ListSchemes"));
             self.inner.unary(req, path, codec).await
         }
         pub async fn pool_info(
             &mut self,
             request: impl tonic::IntoRequest<super::PoolInfoRequest>,
-        ) -> std::result::Result<
-            tonic::Response<super::PoolInfoResponse>,
-            tonic::Status,
-        > {
-            self.inner
-                .ready()
-                .await
-                .map_err(|e| {
-                    tonic::Status::new(
-                        tonic::Code::Unknown,
-                        format!("Service was not ready: {}", e.into()),
-                    )
-                })?;
+        ) -> std::result::Result<tonic::Response<super::PoolInfoResponse>, tonic::Status> {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static("/drand.Control/PoolInfo");
             let mut req = request.into_request();
-            req.extensions_mut().insert(GrpcMethod::new("drand.Control", "PoolInfo"));
+            req.extensions_mut()
+                .insert(GrpcMethod::new("drand.Control", "PoolInfo"));
             self.inner.unary(req, path, codec).await
         }
         /// InitDKG sends information to daemon to start a fresh DKG protocol
         pub async fn init_dkg(
             &mut self,
             request: impl tonic::IntoRequest<super::InitDkgPacket>,
-        ) -> std::result::Result<
-            tonic::Response<super::InitDkgResponse>,
-            tonic::Status,
-        > {
-            self.inner
-                .ready()
-                .await
-                .map_err(|e| {
-                    tonic::Status::new(
-                        tonic::Code::Unknown,
-                        format!("Service was not ready: {}", e.into()),
-                    )
-                })?;
+        ) -> std::result::Result<tonic::Response<super::InitDkgResponse>, tonic::Status> {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static("/drand.Control/InitDKG");
             let mut req = request.into_request();
-            req.extensions_mut().insert(GrpcMethod::new("drand.Control", "InitDKG"));
+            req.extensions_mut()
+                .insert(GrpcMethod::new("drand.Control", "InitDKG"));
             self.inner.unary(req, path, codec).await
         }
         /// PublicKey returns the longterm public key of the drand node
         pub async fn public_key(
             &mut self,
             request: impl tonic::IntoRequest<super::PublicKeyRequest>,
-        ) -> std::result::Result<
-            tonic::Response<super::PublicKeyResponse>,
-            tonic::Status,
-        > {
-            self.inner
-                .ready()
-                .await
-                .map_err(|e| {
-                    tonic::Status::new(
-                        tonic::Code::Unknown,
-                        format!("Service was not ready: {}", e.into()),
-                    )
-                })?;
+        ) -> std::result::Result<tonic::Response<super::PublicKeyResponse>, tonic::Status> {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static("/drand.Control/PublicKey");
             let mut req = request.into_request();
-            req.extensions_mut().insert(GrpcMethod::new("drand.Control", "PublicKey"));
+            req.extensions_mut()
+                .insert(GrpcMethod::new("drand.Control", "PublicKey"));
             self.inner.unary(req, path, codec).await
         }
         pub async fn shutdown(
             &mut self,
             request: impl tonic::IntoRequest<super::ShutdownRequest>,
-        ) -> std::result::Result<
-            tonic::Response<super::ShutdownResponse>,
-            tonic::Status,
-        > {
-            self.inner
-                .ready()
-                .await
-                .map_err(|e| {
-                    tonic::Status::new(
-                        tonic::Code::Unknown,
-                        format!("Service was not ready: {}", e.into()),
-                    )
-                })?;
+        ) -> std::result::Result<tonic::Response<super::ShutdownResponse>, tonic::Status> {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static("/drand.Control/Shutdown");
             let mut req = request.into_request();
-            req.extensions_mut().insert(GrpcMethod::new("drand.Control", "Shutdown"));
+            req.extensions_mut()
+                .insert(GrpcMethod::new("drand.Control", "Shutdown"));
             self.inner.unary(req, path, codec).await
         }
         pub async fn load_beacon(
             &mut self,
             request: impl tonic::IntoRequest<super::LoadBeaconRequest>,
-        ) -> std::result::Result<
-            tonic::Response<super::LoadBeaconResponse>,
-            tonic::Status,
-        > {
-            self.inner
-                .ready()
-                .await
-                .map_err(|e| {
-                    tonic::Status::new(
-                        tonic::Code::Unknown,
-                        format!("Service was not ready: {}", e.into()),
-                    )
-                })?;
+        ) -> std::result::Result<tonic::Response<super::LoadBeaconResponse>, tonic::Status>
+        {
+            self.inner.ready().await.map_err(|e| {
+                tonic::Status::new(
+                    tonic::Code::Unknown,
+                    format!("Service was not ready: {}", e.into()),
+                )
+            })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static("/drand.Control/LoadBeacon");
             let mut req = request.into_request();
-            req.extensions_mut().insert(GrpcMethod::new("drand.Control", "LoadBeacon"));
+            req.extensions_mut()
+                .insert(GrpcMethod::new("drand.Control", "LoadBeacon"));
             self.inner.unary(req, path, codec).await
         }
     }
@@ -1491,17 +1363,11 @@ pub mod control_server {
         async fn list_schemes(
             &self,
             request: tonic::Request<super::ListSchemesRequest>,
-        ) -> std::result::Result<
-            tonic::Response<super::ListSchemesResponse>,
-            tonic::Status,
-        >;
+        ) -> std::result::Result<tonic::Response<super::ListSchemesResponse>, tonic::Status>;
         async fn pool_info(
             &self,
             request: tonic::Request<super::PoolInfoRequest>,
-        ) -> std::result::Result<
-            tonic::Response<super::PoolInfoResponse>,
-            tonic::Status,
-        >;
+        ) -> std::result::Result<tonic::Response<super::PoolInfoResponse>, tonic::Status>;
         /// InitDKG sends information to daemon to start a fresh DKG protocol
         async fn init_dkg(
             &self,
@@ -1511,24 +1377,15 @@ pub mod control_server {
         async fn public_key(
             &self,
             request: tonic::Request<super::PublicKeyRequest>,
-        ) -> std::result::Result<
-            tonic::Response<super::PublicKeyResponse>,
-            tonic::Status,
-        >;
+        ) -> std::result::Result<tonic::Response<super::PublicKeyResponse>, tonic::Status>;
         async fn shutdown(
             &self,
             request: tonic::Request<super::ShutdownRequest>,
-        ) -> std::result::Result<
-            tonic::Response<super::ShutdownResponse>,
-            tonic::Status,
-        >;
+        ) -> std::result::Result<tonic::Response<super::ShutdownResponse>, tonic::Status>;
         async fn load_beacon(
             &self,
             request: tonic::Request<super::LoadBeaconRequest>,
-        ) -> std::result::Result<
-            tonic::Response<super::LoadBeaconResponse>,
-            tonic::Status,
-        >;
+        ) -> std::result::Result<tonic::Response<super::LoadBeaconResponse>, tonic::Status>;
     }
     #[derive(Debug)]
     pub struct ControlServer<T: Control> {
@@ -1553,10 +1410,7 @@ pub mod control_server {
                 max_encoding_message_size: None,
             }
         }
-        pub fn with_interceptor<F>(
-            inner: T,
-            interceptor: F,
-        ) -> InterceptedService<Self, F>
+        pub fn with_interceptor<F>(inner: T, interceptor: F) -> InterceptedService<Self, F>
         where
             F: tonic::service::Interceptor,
         {
@@ -1612,23 +1466,16 @@ pub mod control_server {
                 "/drand.Control/ListSchemes" => {
                     #[allow(non_camel_case_types)]
                     struct ListSchemesSvc<T: Control>(pub Arc<T>);
-                    impl<
-                        T: Control,
-                    > tonic::server::UnaryService<super::ListSchemesRequest>
-                    for ListSchemesSvc<T> {
+                    impl<T: Control> tonic::server::UnaryService<super::ListSchemesRequest> for ListSchemesSvc<T> {
                         type Response = super::ListSchemesResponse;
-                        type Future = BoxFuture<
-                            tonic::Response<Self::Response>,
-                            tonic::Status,
-                        >;
+                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(
                             &mut self,
                             request: tonic::Request<super::ListSchemesRequest>,
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
-                            let fut = async move {
-                                <T as Control>::list_schemes(&inner, request).await
-                            };
+                            let fut =
+                                async move { <T as Control>::list_schemes(&inner, request).await };
                             Box::pin(fut)
                         }
                     }
@@ -1658,21 +1505,16 @@ pub mod control_server {
                 "/drand.Control/PoolInfo" => {
                     #[allow(non_camel_case_types)]
                     struct PoolInfoSvc<T: Control>(pub Arc<T>);
-                    impl<T: Control> tonic::server::UnaryService<super::PoolInfoRequest>
-                    for PoolInfoSvc<T> {
+                    impl<T: Control> tonic::server::UnaryService<super::PoolInfoRequest> for PoolInfoSvc<T> {
                         type Response = super::PoolInfoResponse;
-                        type Future = BoxFuture<
-                            tonic::Response<Self::Response>,
-                            tonic::Status,
-                        >;
+                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(
                             &mut self,
                             request: tonic::Request<super::PoolInfoRequest>,
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
-                            let fut = async move {
-                                <T as Control>::pool_info(&inner, request).await
-                            };
+                            let fut =
+                                async move { <T as Control>::pool_info(&inner, request).await };
                             Box::pin(fut)
                         }
                     }
@@ -1702,21 +1544,16 @@ pub mod control_server {
                 "/drand.Control/InitDKG" => {
                     #[allow(non_camel_case_types)]
                     struct InitDKGSvc<T: Control>(pub Arc<T>);
-                    impl<T: Control> tonic::server::UnaryService<super::InitDkgPacket>
-                    for InitDKGSvc<T> {
+                    impl<T: Control> tonic::server::UnaryService<super::InitDkgPacket> for InitDKGSvc<T> {
                         type Response = super::InitDkgResponse;
-                        type Future = BoxFuture<
-                            tonic::Response<Self::Response>,
-                            tonic::Status,
-                        >;
+                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(
                             &mut self,
                             request: tonic::Request<super::InitDkgPacket>,
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
-                            let fut = async move {
-                                <T as Control>::init_dkg(&inner, request).await
-                            };
+                            let fut =
+                                async move { <T as Control>::init_dkg(&inner, request).await };
                             Box::pin(fut)
                         }
                     }
@@ -1746,21 +1583,16 @@ pub mod control_server {
                 "/drand.Control/PublicKey" => {
                     #[allow(non_camel_case_types)]
                     struct PublicKeySvc<T: Control>(pub Arc<T>);
-                    impl<T: Control> tonic::server::UnaryService<super::PublicKeyRequest>
-                    for PublicKeySvc<T> {
+                    impl<T: Control> tonic::server::UnaryService<super::PublicKeyRequest> for PublicKeySvc<T> {
                         type Response = super::PublicKeyResponse;
-                        type Future = BoxFuture<
-                            tonic::Response<Self::Response>,
-                            tonic::Status,
-                        >;
+                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(
                             &mut self,
                             request: tonic::Request<super::PublicKeyRequest>,
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
-                            let fut = async move {
-                                <T as Control>::public_key(&inner, request).await
-                            };
+                            let fut =
+                                async move { <T as Control>::public_key(&inner, request).await };
                             Box::pin(fut)
                         }
                     }
@@ -1790,21 +1622,16 @@ pub mod control_server {
                 "/drand.Control/Shutdown" => {
                     #[allow(non_camel_case_types)]
                     struct ShutdownSvc<T: Control>(pub Arc<T>);
-                    impl<T: Control> tonic::server::UnaryService<super::ShutdownRequest>
-                    for ShutdownSvc<T> {
+                    impl<T: Control> tonic::server::UnaryService<super::ShutdownRequest> for ShutdownSvc<T> {
                         type Response = super::ShutdownResponse;
-                        type Future = BoxFuture<
-                            tonic::Response<Self::Response>,
-                            tonic::Status,
-                        >;
+                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(
                             &mut self,
                             request: tonic::Request<super::ShutdownRequest>,
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
-                            let fut = async move {
-                                <T as Control>::shutdown(&inner, request).await
-                            };
+                            let fut =
+                                async move { <T as Control>::shutdown(&inner, request).await };
                             Box::pin(fut)
                         }
                     }
@@ -1834,23 +1661,16 @@ pub mod control_server {
                 "/drand.Control/LoadBeacon" => {
                     #[allow(non_camel_case_types)]
                     struct LoadBeaconSvc<T: Control>(pub Arc<T>);
-                    impl<
-                        T: Control,
-                    > tonic::server::UnaryService<super::LoadBeaconRequest>
-                    for LoadBeaconSvc<T> {
+                    impl<T: Control> tonic::server::UnaryService<super::LoadBeaconRequest> for LoadBeaconSvc<T> {
                         type Response = super::LoadBeaconResponse;
-                        type Future = BoxFuture<
-                            tonic::Response<Self::Response>,
-                            tonic::Status,
-                        >;
+                        type Future = BoxFuture<tonic::Response<Self::Response>, tonic::Status>;
                         fn call(
                             &mut self,
                             request: tonic::Request<super::LoadBeaconRequest>,
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
-                            let fut = async move {
-                                <T as Control>::load_beacon(&inner, request).await
-                            };
+                            let fut =
+                                async move { <T as Control>::load_beacon(&inner, request).await };
                             Box::pin(fut)
                         }
                     }
@@ -1877,18 +1697,14 @@ pub mod control_server {
                     };
                     Box::pin(fut)
                 }
-                _ => {
-                    Box::pin(async move {
-                        Ok(
-                            http::Response::builder()
-                                .status(200)
-                                .header("grpc-status", "12")
-                                .header("content-type", "application/grpc")
-                                .body(empty_body())
-                                .unwrap(),
-                        )
-                    })
-                }
+                _ => Box::pin(async move {
+                    Ok(http::Response::builder()
+                        .status(200)
+                        .header("grpc-status", "12")
+                        .header("content-type", "application/grpc")
+                        .body(empty_body())
+                        .unwrap())
+                }),
             }
         }
     }
