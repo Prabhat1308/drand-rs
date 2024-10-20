@@ -14,9 +14,13 @@ env:
 jobs:
     build:
         runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                rust: [stable, beta, nightly]
     
         steps:
           - uses: actions/checkout@v2
+          - run: rustup toolchain install ${{ matrix.rust }} && rustup default ${{ matrix.rust }} && rustup update ${{ matrix.rust }}
           - name: Build
             run: cargo build --verbose
           - name: Test
@@ -25,5 +29,5 @@ jobs:
             run: cargo clippy -- -D warnings
           - name: Format
             run: cargo fmt -- --check
-            
+
         
