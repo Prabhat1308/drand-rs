@@ -12,12 +12,8 @@ env:
     CARGO_TERM_COLOR: always
 
 jobs:
-    build:
+    build-arkworks:
         runs-on: ubuntu-latest
-        strategy:
-            matrix:
-                rust: [stable]
-    
         steps:
           - uses: actions/checkout@v2
           - name: Install protobuf-compiler
@@ -26,26 +22,52 @@ jobs:
             uses: actions-rs/toolchain@v1
             with:
               profile: minimal
-              toolchain: ${{ matrix.rust }}
+              toolchain: stable
               override: true
               components: rustfmt, clippy
-          - name: Build
+          - name: Build with arkworks
             run: cargo build --release --verbose --features arkworks
-          - name: Test
+          - name: Test with arkworks
             run: cargo test --release --verbose --features arkworks
-          - name: Lint
+          - name: Lint with arkworks
             run: cargo clippy --release --features arkworks 
-          #- name: Format check (verbose)
-          #  run: cargo fmt -- --check --verbose $(find . -name '*.rs' -not -path './src/protobuf/*')
-          
-          # New steps for Docker build
-          - name: Set up Docker Buildx
-            uses: docker/setup-buildx-action@v1
-          - name: Build Docker image
+          - name: Build Docker image with arkworks
             uses: docker/build-push-action@v2
             with:
               context: .
               push: false
-              tags: drand:latest
+              tags: drand:arkworks
+              build-args: |
+                FEATURES=arkworks
+              cache-from: type=gha
+              cache-to: type=gha,mode=max
+
+    build-blstrs:
+        runs-on: ubuntu-latest
+        steps:
+          - uses: actions/checkout@v2
+          - name: Install protobuf-compiler
+            run: sudo apt-get update && sudo apt-get install -y protobuf-compiler
+          - name: Install Rust
+            uses: actions-rs/toolchain@v1
+            with:
+              profile: minimal
+              toolchain: stable
+              override: true
+              components: rustfmt, clippy
+          - name: Build with blstrs
+            run: cargo build --release --verbose --features blstrs
+          - name: Test with blstrs
+            run: cargo test --release --verbose --features blstrs
+          - name: Lint with blstrs
+            run: cargo clippy --release --features blstrs 
+          - name: Build Docker image with blstrs
+            uses: docker/build-push-action@v2
+            with:
+              context: .
+              push: false
+              tags: drand:blstrs
+              build-args: |
+                FEATURES=blstrs
               cache-from: type=gha
               cache-to: type=gha,mode=max
